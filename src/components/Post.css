@@ -1,0 +1,12 @@
+.container {
+    margin: 3rem 10%;
+}
+
+.main-post {
+    background-color: #3a5999;
+    margin: 0 auto;
+    width: 80%;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 2rem;
+}
