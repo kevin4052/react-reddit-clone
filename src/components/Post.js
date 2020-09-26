@@ -17,11 +17,12 @@ export default class Post extends Component {
         };
     }
 
-    onCommentSubmit(comment) {
+    onCommentSubmit = (comment) => {
         // this.setState({
         //     comments: this.state.comments.push(comment)
         // })
         console.log(">>>> post")
+        console.log(comment)
     }
 
     render() {
@@ -33,7 +34,7 @@ export default class Post extends Component {
                     sapien a mollis dignissim. Donec nisi sapien, dapibus vel leo non, feugiat 
                     tincidunt ipsum..</p>
                     <div className="comment">
-                        <CommentBox onSubmit={() => this.onCommentSubmit} />
+                        <CommentBox onSubmit={this.onCommentSubmit} />
                     </div>
                 </div>
                 <div>

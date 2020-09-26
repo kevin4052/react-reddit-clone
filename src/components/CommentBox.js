@@ -1,23 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react'
 import './CommentBox.css'
 
-const CommentBox = (props) => {
-
-    const onReply = (event) => {
-        // event.preventDefault();
-        console.log('>>>> commentBox')
-        // console.log({props})
-        const {onSubmit} = props;
-
-        onSubmit('from comment box')
+class CommentBox extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            value: "comment"
+        }
     }
 
-    return (
-        <div className="comment-box">
-            <textarea></textarea>
-            <button onClick={() => onReply()}>reply</button>
-        </div>
-    )
+    onChange = (event) => {
+        this.setState({value: event.target.value})
+    }
+
+    onReply = () => {
+        console.log('>>>> commentbox')
+        this.props.onSubmit(this.state.value);
+    }
+
+    render(){
+        return (
+            <div className="comment-box">
+                <textarea value={this.state.value} onChange={this.onChange}/>
+                <button onClick={this.onReply}>reply</button>
+            </div>
+        )
+    }
 }
 
 export default CommentBox;
