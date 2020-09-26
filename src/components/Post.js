@@ -1,28 +1,26 @@
-import React, { Component } from 'react'
-import CommentBox from './CommentBox'
-import Comment from './Comment'
-import './Post.css'
+import React, { Component } from 'react';
+import CommentBox from './CommentBox';
+import Comment from './Comment';
+import './Post.css';
 
 export default class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            comments: [
-                {
-                    id: "test12",
-                    userName: "test",
-                    content: "test comment"
-                }
-            ]
+            comments: []
         };
     }
 
-    onCommentSubmit = (comment) => {
-        // this.setState({
-        //     comments: this.state.comments.push(comment)
-        // })
-        console.log(">>>> post")
-        console.log(comment)
+    onCommentSubmit = async (comment) => {
+        console.log("main post", {comment});
+
+        await this.setState(state => {
+            const comments =  state.comments.concat(comment);
+            return {comments}
+        });
+
+        console.log(">>>> post");
+        console.log(this.state);
     }
 
     render() {
@@ -40,7 +38,7 @@ export default class Post extends Component {
                 <div>
                     <ul>
                         {this.state.comments.map((comment) => 
-                            <Comment key={comment.id} userName={comment.userName} content={comment.content} />
+                            <Comment key={comment.id} userName={comment.userName} content={comment.value} />
                         )}
                     </ul>
                 </div>
