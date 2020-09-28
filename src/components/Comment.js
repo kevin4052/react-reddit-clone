@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CommentBox from './CommentBox';
+import Votes from './Votes';
 
 class Comment extends Component {
     constructor(props) {
@@ -7,20 +8,23 @@ class Comment extends Component {
         this.state = {
             userName: props.userName,
             content: props.content,
+            votes: 0,
             comments: []
         }
     }
 
     onCommentReply = async (comment) => {
-        console.log("comment post", {comment});
-
         await this.setState(state => {
             const comments =  state.comments.concat(comment);
             return {comments}
         });
+    }
 
-        console.log(">>>> comment of comment");
-        console.log(this.state);
+    onVote = (newVote) => {
+        const newCount = this.state.votes + newVote;
+        this.setState({
+            votes: newCount
+        });
     }
     
     render() {
@@ -28,7 +32,10 @@ class Comment extends Component {
         return (
             <li>
                 <div className="main-post">
-                    <h3>{this.state.userName}</h3>
+                    <div>
+                        <h3>{this.state.userName}</h3>
+                        <Votes onVote={this.onVote} count={this.state.votes} />
+                    </div>
                     <p>{this.state.content}</p>
                     <div className="comment">
                         <CommentBox onSubmit={this.onCommentReply} />
@@ -36,7 +43,7 @@ class Comment extends Component {
                 </div>
                 <ul>
                     {this.state.comments.map((comment) => 
-                        <Comment key={comment.id} userName={comment.userName} content={comment.value} />
+                        <Comment key={comment.id} userName={comment.userName} content={comment.content} />
                     )}
                 </ul>             
             </li>

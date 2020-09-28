@@ -5,36 +5,35 @@ class CommentBox extends Component{
     constructor(props){
         super(props);
         this.state = {
-            value: "",
+            content: "",
             userName: "guest",
             id: ""
         }
     }
 
     onChange = (event) => {
-        this.setState({value: event.target.value})
+        this.setState({content: event.target.value});
     }
 
     onReply = async () => {
-        // console.log('>>>> commentbox');
         const randomNum = Math.random().toString(2);
-
+        const userId = this.state.content.replace('/ /s+/g', "").length.toString(2) + randomNum;
+        const newUserName = this.state.userName + this.state.content.length;
+        
         await this.setState({
-            id: (this.state.value.replace('/ /s+/g', "").length.toString(2) + randomNum),
-            userName: (this.state.userName + this.state.value.length)
+            id: userId,
+            userName: newUserName
         });
 
         const commentState = this.state;
-        // console.log({commentState})
-        this.setState({value: ""})
-
+        this.setState({content: ""});
         this.props.onSubmit(commentState);
     }
 
     render(){
         return (
             <div className="comment-box">
-                <textarea value={this.state.value} onChange={this.onChange}/>
+                <textarea value={this.state.content} onChange={this.onChange}/>
                 <button onClick={this.onReply}>reply</button>
             </div>
         )
